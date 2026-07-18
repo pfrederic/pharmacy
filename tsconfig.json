@@ -2,8 +2,6 @@
   "compilerOptions": {
     "outDir": "./build" /* Redirect output structure to the directory. */,
     "rootDir": ".",
-    "baseUrl": ".",
-    "ignoreDeprecations": "6.0",
     "paths": {
       "@/*": ["./src/*"]
     },
