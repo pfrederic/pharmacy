@@ -1,47 +1,35 @@
-# LegalPlace Take-Home Test Specification
+# Pharmacy
 
-You are a new developer in the Falcon team, and your first job is to add a feature to an old existing piece of code.
+A small TypeScript simulation engine that models a pharmacy's drug inventory and updates each drug's `benefit` (quality) and `expiresIn` (days left) values day after day, following a distinct aging rule per drug type.
 
-## System specifications
+## Why this project
 
-Hi and welcome to the team. We are in the future, and Falcon has extended its activities by opening a pharmacy. Your task is to add a new feature to our system so that we can begin distributing a new drug. First an introduction to our system:
+Inventory management systems for perishable goods need a clear, extensible rule set describing how each item degrades or improves over time. This project implements exactly that: a `Pharmacy` holding a list of `Drug` instances, each with its own aging behavior, so new drug types can be added without touching the core simulation loop.
 
-- All drugs have an `expiresIn` value which denotes the number of days we have until the item expires.
-- All drugs have a `benefit` value which denotes how powerful the drug is.
-- At the end of each day our system lowers both values for every drug
+Supported drug types and their rules:
 
-But there is more:
+- **Drug** (generic): `benefit` and `expiresIn` decrease by 1 each day. Once expired, `benefit` degrades twice as fast. `benefit` never goes below 0.
+- **Dafalgan**: same as a generic drug, but `benefit` degrades twice as fast at all times.
+- **HerbalTea**: `benefit` increases as it ages, twice as fast once expired. `benefit` never exceeds 50.
+- **Fervex**: `benefit` increases as the expiration date approaches (+2 at 10 days or less, +3 at 5 days or less), then drops to 0 once expired.
+- **MagicPill**: never expires and its `benefit` never changes.
 
-- Once the expiration date has passed, Benefit degrades twice as fast.
-- The Benefit of an item is never negative.
-- "Herbal Tea" actually increases in Benefit the older it gets. Benefit increases twice as fast after the expiration date.
-- The Benefit of an item is never more than 50.
-- "Magic Pill" never expires nor decreases in Benefit.
-- "Fervex", like Herbal Tea, increases in Benefit as its expiration date approaches. Benefit increases by 2 when there are 10 days or less and by 3 when there are 5 days or less but Benefit drops to 0 after the expiration date.
+## Requirements
 
-We have recently signed a supplier of "Dafalgan". This requires an update to our system:
+- Node.js
+- Yarn
 
-- "Dafalgan" degrades in Benefit twice as fast as normal drugs.
+## Available commands
 
-## Instructions
+| Command | Description |
+| --- | --- |
+| `yarn start` | Runs the 30-day simulation defined in `index.ts` and writes the result to `output.json`. |
+| `yarn test` | Runs the unit test suite with Jest. |
+| `yarn lint` | Lints the codebase with ESLint. |
 
-- [ ] Create a clone from this repository
-- [ ] Implement the required feature
-- [ ] Push the clone to your own repository when satisfied
-- [ ] Send us the link and tell us approximatively how much time you spent on this assignment
+## Project structure
 
-You are encouraged to refactor the existing code before adding your own, as you would do if this was a real task in real life. We strongly recommend that you write tests to help you during this process.
-
-Feel free to make any changes to the `updateBenefitValue` method implementation and add any new code as long as everything still works correctly. However, do not break the public API of the `Drug` and `Pharmacy` classes, as those are used by other pieces of the software (you can add new methods though).
-
-Please commit as frequently as possible to make the review easier.
-
-We expect you to spend no more than 2 hours on this assignment. We value the quality of the end result, not how much time you have spent on it.
-
-## Test
-
-To make sure that you will not break anything in the existing code, we added the result of the simulation in the _output.json_ file. Make sure that your code is able to generate a file with identical content. You can generate a new file by running the following command:
-
-```sh
-yarn start
-```
+- `src/drug/` — the `Drug` base class and each drug subtype (`Dafalgan`, `Fervex`, `HerbalTea`, `MagicPill`).
+- `src/pharmacy.ts` — the `Pharmacy` class, which advances every drug it holds by one day at a time.
+- `src/test/` — unit tests covering the aging rules.
+- `index.ts` — entry point running the 30-day simulation and dumping the result to `output.json`.
