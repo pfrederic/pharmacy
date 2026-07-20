@@ -1,11 +1,28 @@
+import { Dafalgan, Fervex, HerbalTea, MagicPill } from './index'
 import { IDrug } from './interface'
 
 export class Drug implements IDrug {
-  constructor(
+  protected constructor(
     public readonly name: string,
     public expiresIn: number,
     public benefit: number,
   ) {}
+
+  static createDrug(name: string, expiresIn: number, benefit: number): Drug {
+    switch (name) {
+      case 'Dafalgan':
+        return new Dafalgan(expiresIn, benefit)
+      case 'Fervex':
+        return new Fervex(expiresIn, benefit)
+      case 'Herbal Tea':
+        return new HerbalTea(expiresIn, benefit)
+      case 'Magic Pill':
+        return new MagicPill(expiresIn, benefit)
+      default:
+        break
+    }
+    return new Drug(name, expiresIn, benefit)
+  }
 
   computeBenefitValue(): void {
     if (this.expiresIn > 0) {

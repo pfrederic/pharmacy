@@ -1,12 +1,8 @@
 import { Drug } from './drug'
 
-export class MagicPill implements Drug {
-  readonly name: string = 'Magic Pill'
-  expiresIn: number
-  benefit: number
+export class MagicPill extends Drug {
   constructor(expiresIn: number, benefit: number) {
-    this.expiresIn = expiresIn
-    this.benefit = benefit
+    super('Magic Pill', expiresIn, benefit)
   }
 
   computeBenefitValue(): void {

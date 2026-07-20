@@ -1,13 +1,14 @@
-import { Drug, Pharmacy, HerbalTea, Fervex, MagicPill } from './src/index'
+import { Drug, Pharmacy } from './src/index'
 
 import fs from 'fs'
 
 const drugs = [
-  new Drug('Doliprane', 20, 30),
-  new HerbalTea(10, 5),
-  new Fervex(12, 35),
-  new MagicPill(15, 40),
+  Drug.createDrug('Doliprane', 20, 30),
+  Drug.createDrug('Herbal Tea', 10, 5),
+  Drug.createDrug('Fervex', 12, 35),
+  Drug.createDrug('Magic Pill', 15, 40),
 ]
+
 const pharmacy = new Pharmacy(drugs)
 
 const log = []
